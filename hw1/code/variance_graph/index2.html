@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Percentage Variance between Budget and Actuals, By Department</title>
+    <link rel="stylesheet" href="_css/main.css">
+    <script src="_js/jquery-1.11.0.min.js"></script>
+    <script src="_js/highcharts.js"></script>
+</head>
+<body>
+    <div id="container">
+    </div>
+    <div id="ytd">
+       <div id = "tots">
+       <div id = "myhead">Total YTD Company Budget and Actual Spending-2013</div>
+      </div>
+
+       <div id = "percentz">
+        <div id = "myhead">Percentage of Total Company YTD Budget </br>
+          and Actual Spending By Department-2013</div>
+      </div>
+     
+      <div id = "dollarz">
+      <div id = "myhead">Budget and Actual YTD Dollar Amounts By Department-2013</div>
+      </div>
+  </div>
+  <div id="estimate">
+    <p>Note: November actual spending is an estimate-first 2 weeks of month were multipled by two to get the entire month. <p>
+  </div>
+<script>
+
+function setWindowHeight(){
+    var windowHeight = window.innerHeight;
+   document.getElementsByTagName('body')[0].style.height = windowHeight + "px";
+//will get the first element tagged body
+}
+
+window.addEventListener("resize",setWindowHeight,true);
+
+function generate_table_tot(sumactual, sumbudget){
+  //first get the totals for ytd
+  total_budgetsum = 0; 
+  total_actualsum = 0;
+  for (var i=0;i<sumactual.length;i++){
+    total_actualsum = sumactual[i][1] + total_actualsum;
+  }
+  for (var i=0;i<sumbudget.length;i++){
+    total_budgetsum = sumbudget[i][1] + total_budgetsum;
+  }
+  ///create the table:
+  var mybody = document.getElementById("tots");
+  // creates a <table> element and a <tbody> element
+  var tbl   = document.createElement("table");
+  var tblBody = document.createElement("tbody");
+
+  //create the table heading
+  var orderArrayHeader = ['Total Company YTD Budget','Total Company of YTD Actual Spending'];
+  var thead = document.createElement('thead');
+  tbl.appendChild(thead);
+  for(var i=0;i<orderArrayHeader.length;i++){
+    thead.appendChild(document.createElement("th")).
+    appendChild(document.createTextNode(orderArrayHeader[i]));
+  }
+
+  //now create a table row
+  var row = document.createElement("tr");
+  var cell1 = document.createElement("td");
+  var cellText1 = document.createTextNode("$"+ String(total_budgetsum));
+  cell1.appendChild(cellText1);
+  row.appendChild(cell1);
+
+  var cell2 = document.createElement("td");
+  var cellText2 = document.createTextNode( "$"+ String(total_actualsum));
+  cell2.appendChild(cellText2);
+  row.appendChild(cell2);
+  tblBody.appendChild(row);
+  // put the <tbody> in the <table>
+  tbl.appendChild(tblBody);
+    // add the row to the end of the table body
+    // appends <table> into <body>
+  mybody.appendChild(tbl);
+  return cell2;
+}
+
+///create the table to show the YTD numbers for each dept as a percent
+function generate_table_percentages(sumactual, sumbudget) {
+  //first get the totals for ytd
+  total_budgetsum = 0; 
+  total_actualsum = 0;
+  for (var i=0;i<sumactual.length;i++){
+    total_actualsum = sumactual[i][1] + total_actualsum;
+  }
+  for (var i=0;i<sumbudget.length;i++){
+    total_budgetsum = sumbudget[i][1] + total_budgetsum;
+  }
+
+  ///create the table:
+  var mybody = document.getElementById("percentz");
+
+  // creates a <table> element and a <tbody> element
+  var tbl   = document.createElement("table");
+  var tblBody = document.createElement("tbody");
+
+  //create the table heading
+  var orderArrayHeader = ['Department','% of YTD Budget','% of YTD Actual Spending'];
+
+  var thead = document.createElement('thead');
+  tbl.appendChild(thead);
+  for(var i=0;i<orderArrayHeader.length;i++){
+    thead.appendChild(document.createElement("th")).
+    appendChild(document.createTextNode(orderArrayHeader[i]));
+  }
+  //create a table row.
+  //calcuate the ytd totals by depts
+  for (var i=0;i<sumactual.length;i++){   
+    totalactual = Math.round(sumactual[i][1],2);
+    totalbudget = Math.round(sumbudget[i][1],2);
+    
+    percentbudget = Math.round(totalbudget/total_budgetsum*100,2);
+    percentactual = Math.round((totalactual/total_actualsum)*100,2);
+
+    //now create a table row
+    var row = document.createElement("tr");
+    //name of dept
+    var cell1 = document.createElement("td");
+    var cellText1 = document.createTextNode(sumactual[i][0]);
+    cell1.appendChild(cellText1);
+    row.appendChild(cell1);
+
+    //percent budget
+    var cell2 = document.createElement("td");
+    var cellText2 = document.createTextNode(String(percentbudget) + "%");
+    cell2.appendChild(cellText2);
+    row.appendChild(cell2);
+
+     //percent actual
+    var cell4 = document.createElement("td");
+    var cellText4= document.createTextNode(String(percentactual)+ "%");
+    cell4.appendChild(cellText4);
+    row.appendChild(cell4);
+
+    tblBody.appendChild(row);
+  }
+  // put the <tbody> in the <table>
+  tbl.appendChild(tblBody);
+
+    // add the row to the end of the table body
+    // appends <table> into <body>
+  mybody.appendChild(tbl);
+  return "cool";
+}
+
+
+function generate_table_dollar(sumactual, sumbudget) {
+  //first get the totals for ytd
+  total_budgetsum = 0; 
+  total_actualsum = 0;
+  for (var i=0;i<sumactual.length;i++){
+    total_actualsum = sumactual[i][1] + total_actualsum;
+  }
+  for (var i=0;i<sumbudget.length;i++){
+    total_budgetsum = sumbudget[i][1] + total_budgetsum;
+  }
+
+  ///create the table:
+  var mybody = document.getElementById("dollarz");
+
+  // creates a <table> element and a <tbody> element
+  var tbl   = document.createElement("table");
+  var tblBody = document.createElement("tbody");
+
+  //create the table heading
+  var orderArrayHeader = ['Department', 'YTD Budget in $','YTD Actual Spending in $'];
+
+  var thead = document.createElement('thead');
+  tbl.appendChild(thead);
+  for(var i=0;i<orderArrayHeader.length;i++){
+    thead.appendChild(document.createElement("th")).
+    appendChild(document.createTextNode(orderArrayHeader[i]));
+  }
+  //create a table row.
+  //calcuate the ytd totals by depts
+  for (var i=0;i<sumactual.length;i++){   
+    totalactual = Math.round(sumactual[i][1],2);
+    totalbudget = Math.round(sumbudget[i][1],2);
+    
+    percentbudget = Math.round(totalbudget/total_budgetsum*100,2);
+    percentactual = Math.round((totalactual/total_actualsum)*100,2);
+
+    //now create a table row
+    var row = document.createElement("tr");
+    //name of dept
+    var cell1 = document.createElement("td");
+    var cellText1 = document.createTextNode(sumactual[i][0]);
+    cell1.appendChild(cellText1);
+    row.appendChild(cell1);
+
+   //budget $$$
+    var cell3 = document.createElement("td");
+    var cellText3 = document.createTextNode("$" + String(totalbudget));
+    cell3.appendChild(cellText3);
+    row.appendChild(cell3);
+
+
+    //actual $$$
+    var cell5 = document.createElement("td");
+    var cellText5 = document.createTextNode("$" + String(totalactual));
+    cell5.appendChild(cellText5);
+    row.appendChild(cell5);
+
+    tblBody.appendChild(row);
+  }
+  // put the <tbody> in the <table>
+  tbl.appendChild(tblBody);
+
+    // add the row to the end of the table body
+    // appends <table> into <body>
+  mybody.appendChild(tbl);
+  return "cool";
+}
+
+// function to return color (gold/silver/bronze)
+function colors(i) {
+  switch(i) {
+    case 0:
+      return "#800080";
+      break;
+    case 1:
+      return "#FF00FF";
+      break;
+    case 2:
+      return "#0000FF";
+      break;
+    case 3:
+      return "#FF0000";
+      break;
+    case 4:
+      return "#00F5FF";
+      break;
+    case 5:
+      return "#FFA500";
+      break;
+    case 6:
+      return "#FFFF00";
+      break;
+    case 7:
+      return "#00FF00"; 
+      break;
+  };
+}  
+
+sumbudget = [];
+sumactual = [];
+
+// set up the initial options
+var options = {
+  chart: {
+    renderTo: "container",
+     defaultSeriesType: "line",
+    style: {
+      fontFamily: "Helvetica,Arial,sans-serif"
+    }
+  },
+  legend: {
+    borderRadius: 0,
+    itemStyle: {
+      color: "#000000",
+      fontFamily: "Helvetica,Arial,sans-serif",
+      fontSize: "15px",
+    }
+  },
+  series: [],
+  title: {
+    text: "PERCENTAGE VARIANCE BETWEEN BUDGET AND ACTUALS </br> BY DEPARTMENT",
+    style: {
+      color: "#000000",
+      fontFamily: "Helvetica,Arial,sans-serif",
+      fontSize: "20px",
+      fontWeight: "bold"
+    }
+  },
+  tooltip: {
+    // hints: borderRadius, borderWidth, shadow
+    borderRadius:5, 
+    borderWidth:3, 
+    shadow: true,
+    
+    style: {
+      // hints: color, fontFamily, fontSize, padding
+    color: "#000000",
+    fontFamily: "Helvetica,Arial,sans-serif",
+    fontSize: "15px", 
+    padding: "7px"
+
+    }
+  },
+  xAxis: {
+    categories: [],
+    labels: {
+      style: {
+        color: "#333333",
+        fontFamily: "Helvetica,Arial,sans-serif",
+        fontSize: "15px"
+      }
+    },
+  },
+  yAxis: {
+    // hints: gridLineColor, gridLineDashStyle 
+    plotLines: [{
+      color: '#808080',
+      width: 7,
+      value: 0
+    }],
+    gridlineColor: "#333333",
+    tickInterval:5,
+    gridLineDashStyle: 'shortdot',
+    labels: {
+      style: {
+        color: "#333333",
+        fontFamily: "Helvetica,Arial,sans-serif",
+        fontSize:"15px"
+      }
+    },
+    min: -40,
+    max: 60,
+    stackLabels: {
+      enabled: true,
+      style: {
+        fontFamily: "Helvetica,Arial,sans-serif",
+        fontWeight: "bold",
+        color: "#333333"
+      }
+    },
+    title: {
+      style: {
+        color: "#333333",
+        fontFamily: "Helvetica,Arial,sans-serif"
+      },
+      text: "Percentage Variance"
+    }
+  }
+}
+
+
+
+// ajax call to data from the csv file
+//first get the actual numbers
+actual = [];
+$.get("_data/actual.csv", function (data) {
+  var lines = data.split('\n');
+  $.each(lines, function(lineNo, line) {
+    dept = []; 
+    dept = line.split(',');
+    actual.push(dept);
+    });
+  });
+
+budget= [];
+change= [];
+months = [];
+count = 0;
+$.get("_data/budget.csv", function (data) {
+  var lines = data.split('\n');
+  $.each(lines, function(lineNo, line) {
+    dept = []; 
+    dept = line.split(',');
+    budget.push(dept);
+    });
+  for (var i=0;i<budget.length;i++){   
+    if(i == 0){
+      months = budget[i];
+      months.shift();
+      //populate the x axis with the months
+      options.xAxis.categories =  $.merge( options.xAxis.categories, months);
+    }
+    ///now calculate the percentage change between each month
+    else{
+      deptchange = [];  
+      deptbudgetsum = [];
+      deptactualsum = [];
+      depta_sum = 0;
+      deptb_sum = 0;
+      for (var k=0;k<budget[i].length;k++){ 
+        mychange = 0;
+        //grab the department name
+        if(k ==0){
+          deptchange.push(budget[i][k]);
+          deptactualsum.push(budget[i][k]);
+          deptbudgetsum.push(budget[i][k]);
+          //document.write("###</br>");
+          //document.write(budget[i][k]);
+          //document.write("###</br>");
+
+        }
+        //do calculatations:
+        else {
+          mychange = 0
+          actualinstance = parseInt(actual[i][k]);
+          budgetinstance = parseInt(budget[i][k]);
+          //deptbudgetsum.push(budgetinstance);
+          //deptactualsum.push(actualinstance);
+          mychange = ((actualinstance -budgetinstance)/budgetinstance) *100;
+          //document.write(mychange);
+          //document.write("</br>")
+           deptb_sum  =  deptb_sum +  budgetinstance;
+           depta_sum  =  depta_sum +  actualinstance ;
+          deptchange.push(mychange);
+        }
+      }
+      //document.write("######");
+      //document.write(deptchange.length)
+      deptactualsum.push( depta_sum);
+      deptbudgetsum.push( deptb_sum);
+      change.push(deptchange);
+      sumactual.push(deptactualsum);
+      sumbudget.push(deptbudgetsum);
+    }
+     
+  }
+  //document.write(change);
+  //document.write(change.length)
+  //now we got the percentage changes for each department; put them in the series data 
+  for(var i = 0; i < change.length; i++) {
+    var seriesData = { name: "", data: [],  color: "" };  
+    if(change[i].length > 1){
+     // document.write("####</br>");
+      //document.write(change[i].length);
+      seriesData.name = change[i][0];
+      seriesData.color =  colors(i);
+      change[i].shift();
+      seriesData.data = change[i];
+      //document.write("</br>####</br>");
+      //document.write(seriesData.data);
+      options.series.push(seriesData);
+    }
+  };
+    // create a placeholder object & pull the required value for each key from "medalType" variable, "medalCount" variable, & "colors()" function
+    // after the object is properly constructed, push it to "options.series" 
+    //seriesData.name = "gold";
+    //seriesData.data = medalCount[0];
+    //seriesData.color =  colors(i);
+  //}
+  var chart = new Highcharts.Chart(options);
+  var mytable0 = generate_table_tot(sumactual, sumbudget);
+  var mytable = generate_table_percentages(sumactual, sumbudget);
+   var mytable2 = generate_table_dollar(sumactual, sumbudget);
+  //document.write(mytable);
+  
+});
+
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,226 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+ <meta charset="UTF-8" />
+ <head>
+ <link rel="stylesheet" href="css/main.css">
+<title> Celebrity Cat Meow Down: the internet most popular cat </title>
+<!-- Add jQuery library -->
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+<!-- Add mousewheel plugin (this is optional) -->
+<script type="text/javascript" src="/i247/hw2/javscript/fancybox/lib/jquery.mousewheel-3.0.6.pack.js"></script>
+
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="/i247/hw2/javscript/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="/i247/hw2/javscript/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet" href="/i247/hw2/javscript/fancybox/source/helpers/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
+<script type="text/javascript" src="/i247/hw2/javscript/fancybox/source/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+
+<!--Add high charts -->
+ <script src="/i247/hw2/javscript/highcharts.js"></script>
+
+<!--Add google fonts--> 
+<link href='http://fonts.googleapis.com/css?family=Ultra' rel='stylesheet' type='text/css'>
+
+
+<script> 
+$(document).ready(function() {
+	$(".fancybox-thumb").fancybox({
+		prevEffect	: 'none',
+		nextEffect	: 'none',
+		helpers	: {
+			title	: {
+				type: 'outside'
+			},
+			thumbs	: {
+				width	: 50,
+				height	: 50
+			}
+		}
+	});
+});
+</script>
+<script>
+function setWindowHeight(){
+    var windowHeight = window.innerHeight;
+   document.getElementsByTagName('body')[0].style.height = windowHeight + "px";
+//will get the first element tagged body
+}
+
+window.addEventListener("resize",setWindowHeight,true);
+</script>
+<script type="text/javascript">
+    //<![CDATA[
+
+    var tabLinks = new Array();
+    var contentDivs = new Array();
+
+
+function init() {
+
+      // Grab the tab links and content divs from the page
+      var tabListItems = document.getElementById('tabs').childNodes;
+      for ( var i = 0; i < tabListItems.length; i++ ) {
+        if ( tabListItems[i].nodeName == "LI" ) {
+          var tabLink = getFirstChildWithTagName( tabListItems[i], 'A' );
+          var id = getHash( tabLink.getAttribute('href') );
+          tabLinks[id] = tabLink;
+          contentDivs[id] = document.getElementById( id );
+        }
+      }
+
+      // Assign onclick events to the tab links, and
+      // highlight the first tab
+      var i = 0;
+
+      for ( var id in tabLinks ) {
+        tabLinks[id].onclick = showTab;
+        tabLinks[id].onfocus = function() { this.blur() };
+        if ( i == 0 ) tabLinks[id].className = 'selected';
+        i++;
+      }
+
+      // Hide all content divs except the first
+      var i = 0;
+
+      for ( var id in contentDivs ) {
+        if ( i != 0 ) contentDivs[id].className = 'tabContent hide';
+        i++;
+      }
+    }
+     function showTab() {
+      var selectedId = getHash( this.getAttribute('href') );
+
+      // Highlight the selected tab, and dim all others.
+      // Also show the selected content div, and hide all others.
+      for ( var id in contentDivs ) {
+        if ( id == selectedId ) {
+          tabLinks[id].className = 'selected';
+          contentDivs[id].className = 'tabContent';
+        } else {
+          tabLinks[id].className = '';
+          contentDivs[id].className = 'tabContent hide';
+        }
+      }
+
+      // Stop the browser following the link
+      return false;
+    }
+    function getFirstChildWithTagName( element, tagName ) {
+      for ( var i = 0; i < element.childNodes.length; i++ ) {
+        if ( element.childNodes[i].nodeName == tagName ) return element.childNodes[i];
+      }
+    }
+     function getHash( url ) {
+      var hashPos = url.lastIndexOf ( '#' );
+      return url.substring( hashPos + 1 );
+    }
+    </script>
+
+<!--script for youtube -->
+ <script src="/i247/hw2/javscript/mytube.js"></script>
+ <script src="/i247/hw2/javscript/myface.js"></script>
+ <script src="/i247/hw2/javscript/mytweet.js"></script>
+ <script src="/i247/hw2/javscript/spinder.js"></script>
+
+
+
+  </head>
+
+
+  <body onload="init()">
+
+<H1> Meow Down: The Fight to be </br>
+	the Internet's Most Popular Cat </H1>
+
+	<h2> The internet is obsessed with cats, 
+  </br> but who's really the most popular online? </h2>
+
+<div id = 'cats1'> 
+	<div class = "img">
+		<a class="fancybox-thumb" rel="fancybox-thumb" href="/i247/hw2/images/maru_cat2.jpg" title="Maru">
+		<img src="/i247/hw2/images/maru_cat.jpg" width="250" height="250"  alt="" />
+		</a> 
+	</div>
+
+	<div class = "img">
+		<a class="fancybox-thumb" rel="fancybox-thumb" href="/i247/hw2/images/keyboardcat2.jpg" title="KeyBoardCat">
+		<img src="/i247/hw2/images/keyboardcat.jpg"  width="250" height="250" alt="" />
+		</a> 
+	</div>
+
+	<div class = "img">
+		<a class="fancybox-thumb" rel="fancybox-thumb" href="/i247/hw2/images/station_master_tama2.jpg" title="Station Master Tama">
+		<img src="/i247/hw2/images/station_master_tama.jpg"  width="250" height="250" alt="" />
+		</a> 
+	</div>
+
+	<div class = "img">
+		<a class="fancybox-thumb" rel="fancybox-thumb" href="/i247/hw2/images/grumpycat2.jpg" title="Grumpy Cat">
+		<img src="/i247/hw2/images/grumpycat.jpg"  width="250" height="250" alt="" />
+		</a>
+	</div>
+
+	
+</div>
+
+<div id = "mymain">
+<ul id="tabs">
+  <li><a href="#Youtube">YouTube</a></li>
+  <li><a href="#Facebook">Facebook</a></li>
+  <li><a href="#Twitter">Twitter</a></li>
+</ul>
+
+ <div class="tabContent" id="Youtube">
+<div id="bar-chart">
+</div>
+</div>
+
+    <div class="tabContent" id="Facebook">
+     <div id="column-chart">
+
+    </div>	
+    </div>
+
+    <div class="tabContent" id="Twitter">
+     <div id="bar-chart2">
+	</div>
+    </div>
+
+
+   <div id="myspider">
+    </div>
+    <p>Note: Number of Twitter followers, Facebook likes and Youtube views was scaled to fit spider chart </p>
+</div>
+
+
+
+
+
+<div id = "cats2">
+	<div class = "img">
+		<a class="fancybox-thumb" rel="fancybox-thumb"  href="/i247/hw2/images/henri2.jpg" title="Henri, le Chat Noir"><img src="/i247/hw2/images/henri.jpg" width="250" height="250" alt="" />
+		</a>
+	</div>
+
+	<div class = "img">
+		<a class="fancybox-thumb" rel="fancybox-thumb" href="/i247/hw2/images/cornel_meow2.jpg" title="Cornel Meow">
+		<img src="/i247/hw2/images/cornel_meow.jpg"  width="250" height="250" alt="" />
+		</a>
+	</div>
+
+	<div class = "img">
+		<a class="fancybox-thumb" rel="fancybox-thumb" href="/i247/hw2/images/nyancat2.jpg" title="Nyan Cat">
+		<img src="/i247/hw2/images/nyancat.jpg"  width="250" height="250" alt="" />
+		</a>
+	</div>
+	<div class = "img">
+		<a class="fancybox-thumb" rel="fancybox-thumb" href="	/i247/hw2/images/lilbub2.jpg" title="Lil' Bub">
+		<img src="/i247/hw2/images/lilbub.jpg"  width="250" height="250" alt="" />
+		</a>
+	</div>
+</div>
+
+<body>
